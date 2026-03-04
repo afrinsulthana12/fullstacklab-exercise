@@ -1,0 +1,26 @@
+/**
+ * @param {number} rowsCount
+ * @param {number} colsCount
+ * @return {Array<Array<number>>}
+ */
+Array.prototype.snail = function(rowsCount, colsCount) {
+    // Check if the input array can actually form the requested grid
+    if (rowsCount * colsCount !== this.length) return [];
+
+    // Initialize the 2D result array
+    const result = Array.from({ length: rowsCount }, () => []);
+
+    for (let j = 0; j < colsCount; j++) {
+        const isReverse = j % 2 === 1; // Odd columns go bottom-to-top
+        
+        for (let i = 0; i < rowsCount; i++) {
+            // Calculate index based on direction
+            const rowIndex = isReverse ? (rowsCount - 1 - i) : i;
+            const elementIndex = j * rowsCount + i;
+            
+            result[rowIndex][j] = this[elementIndex];
+        }
+    }
+
+    return result;
+}
