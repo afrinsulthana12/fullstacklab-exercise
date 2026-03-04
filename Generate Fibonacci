@@ -1,0 +1,13 @@
+/**
+ * @return {Generator<number>}
+ */
+var fibGenerator = function*() {
+    let prev = 0;
+    let curr = 1;
+
+    while (true) {
+        yield prev;
+        // Using destructuring to update both values simultaneously
+        [prev, curr] = [curr, prev + curr];
+    }
+};
