@@ -1,0 +1,33 @@
+/**
+ * @param {*} obj
+ * @param {*} classFunction
+ * @return {boolean}
+ */
+var checkIfInstanceOf = function(obj, classFunction) {
+    // Return false if the classFunction is null, undefined, or not a function/class
+    if (classFunction === null || classFunction === undefined || typeof classFunction.prototype !== 'object') {
+        return false;
+    }
+
+    // Traverse the prototype chain
+    // Using Object() on obj ensures primitives like numbers are "boxed" 
+    // into objects so their prototypes can be accessed.
+    let currentProto = obj !== null && obj !== undefined ? Object.getPrototypeOf(Object(obj)) : null;
+
+    while (currentProto !== null) {
+        if (currentProto === classFunction.prototype) {
+            return true;
+        }
+        currentProto = Object.getPrototypeOf(currentProto);
+    }
+
+    return false;
+};
+
+/**
+ * Example Usage:
+ * checkIfInstanceOf(new Date(), Date); // true
+ * checkIfInstanceOf(5, Number);        // true (box 5 to Number object)
+ * checkIfInstanceOf([], Array);        // true
+ * checkIfInstanceOf([], Object);       // true (Array inherits from Object)
+ */
